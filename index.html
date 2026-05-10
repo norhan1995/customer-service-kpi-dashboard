@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Service KPI Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">CS</div>
+      <div>
+        <h2>ServiceOps</h2>
+        <p>KPI Dashboard</p>
+      </div>
+    </div>
+
+    <nav>
+      <a class="active">Dashboard</a>
+      <a>Agents</a>
+      <a>Tickets</a>
+      <a>Reports</a>
+      <a>Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Operations Overview</p>
+        <h1>Customer Service Performance</h1>
+      </div>
+      <button id="themeToggle">Dark Mode</button>
+    </header>
+
+    <section class="cards">
+      <div class="card">
+        <p>Total Tickets</p>
+        <h2 id="ticketsCount">0</h2>
+        <span class="up">+12% this week</span>
+      </div>
+      <div class="card">
+        <p>Resolution Rate</p>
+        <h2 id="resolutionCount">0%</h2>
+        <span class="up">Target: 90%</span>
+      </div>
+      <div class="card">
+        <p>Avg. Response Time</p>
+        <h2 id="responseCount">0m</h2>
+        <span class="down">Needs attention</span>
+      </div>
+      <div class="card">
+        <p>Customer Satisfaction</p>
+        <h2 id="csatCount">0%</h2>
+        <span class="up">Excellent</span>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="panel large">
+        <div class="panel-header">
+          <h3>Tickets by Day</h3>
+          <p>Weekly ticket volume trend</p>
+        </div>
+        <canvas id="ticketsChart"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Ticket Status</h3>
+          <p>Current workload split</p>
+        </div>
+        <canvas id="statusChart"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Team Leaderboard</h3>
+          <p>Top agents this month</p>
+        </div>
+        <div class="leaderboard">
+          <div><span>1. Sarah Ahmed</span><strong>96%</strong></div>
+          <div><span>2. Omar Hassan</span><strong>92%</strong></div>
+          <div><span>3. Mona Ali</span><strong>89%</strong></div>
+          <div><span>4. Karim Said</span><strong>84%</strong></div>
+        </div>
+      </div>
+
+      <div class="panel large">
+        <div class="panel-header">
+          <h3>Quality Checklist</h3>
+          <p>Compliance and service behavior scoring</p>
+        </div>
+
+        <div class="checklist">
+          <div>
+            <span>Greeting & verification</span>
+            <progress value="94" max="100"></progress>
+          </div>
+          <div>
+            <span>Problem diagnosis</span>
+            <progress value="87" max="100"></progress>
+          </div>
+          <div>
+            <span>Clear communication</span>
+            <progress value="91" max="100"></progress>
+          </div>
+          <div>
+            <span>Closing & follow-up</span>
+            <progress value="78" max="100"></progress>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
