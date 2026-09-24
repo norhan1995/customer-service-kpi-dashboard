@@ -4,6 +4,10 @@ A polished, responsive **customer experience operations dashboard** designed as 
 
 > **Data note:** All figures in this repository are synthetic. No real customer, employee, or company data is included.
 
+## Live demo
+
+https://norhan1995.github.io/customer-service-kpi-dashboard/
+
 ## What this project demonstrates
 
 - Executive KPI design for contact-center operations
