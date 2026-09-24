@@ -59,3 +59,8 @@ A production version would connect to a secured analytics API or warehouse, add 
 ## License
 
 Created as a personal portfolio project.
+
+## Author
+
+**Norhan Rifaie**  
+[Portfolio](https://norhan-rifaie-portfolio-t6s0kg.v2.appdeploy.ai/) · [GitHub](https://github.com/norhan1995)
