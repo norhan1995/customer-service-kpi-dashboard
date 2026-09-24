@@ -69,4 +69,4 @@ Created as a personal portfolio project.
 ## Author
 
 **Norhan Rifaie**  
-[Portfolio](https://norhan-rifaie-portfolio-t6s0kg.v2.appdeploy.ai/) · [GitHub](https://github.com/norhan1995)
+[Portfolio](https://norhanrifaie.vercel.app) · [GitHub](https://github.com/norhan1995)
