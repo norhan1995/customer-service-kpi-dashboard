@@ -1,5 +1,7 @@
 # CX Command Center — Operations Intelligence
 
+[![CI](https://github.com/norhan1995/customer-service-kpi-dashboard/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/norhan1995/customer-service-kpi-dashboard/actions/workflows/verify.yml)
+
 A polished, responsive **customer experience operations dashboard** designed as a portfolio demonstration of contact-center analytics, KPI design, workforce visibility, and service-quality monitoring.
 
 > **Data note:** All figures in this repository are synthetic. No real customer, employee, or company data is included.
