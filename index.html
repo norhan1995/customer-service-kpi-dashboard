@@ -3,118 +3,210 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customer Service KPI Dashboard</title>
+  <meta name="description" content="Portfolio-grade customer experience operations dashboard with realistic synthetic contact-center data." />
+  <title>CX Command Center — Operations Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-icon">CS</div>
-      <div>
-        <h2>ServiceOps</h2>
-        <p>KPI Dashboard</p>
-      </div>
-    </div>
-
-    <nav>
-      <a class="active">Dashboard</a>
-      <a>Agents</a>
-      <a>Tickets</a>
-      <a>Reports</a>
-      <a>Settings</a>
-    </nav>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Operations Overview</p>
-        <h1>Customer Service Performance</h1>
-      </div>
-      <button id="themeToggle">Dark Mode</button>
-    </header>
-
-    <section class="cards">
-      <div class="card">
-        <p>Total Tickets</p>
-        <h2 id="ticketsCount">0</h2>
-        <span class="up">+12% this week</span>
-      </div>
-      <div class="card">
-        <p>Resolution Rate</p>
-        <h2 id="resolutionCount">0%</h2>
-        <span class="up">Target: 90%</span>
-      </div>
-      <div class="card">
-        <p>Avg. Response Time</p>
-        <h2 id="responseCount">0m</h2>
-        <span class="down">Needs attention</span>
-      </div>
-      <div class="card">
-        <p>Customer Satisfaction</p>
-        <h2 id="csatCount">0%</h2>
-        <span class="up">Excellent</span>
-      </div>
-    </section>
-
-    <section class="dashboard-grid">
-      <div class="panel large">
-        <div class="panel-header">
-          <h3>Tickets by Day</h3>
-          <p>Weekly ticket volume trend</p>
-        </div>
-        <canvas id="ticketsChart"></canvas>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h3>Ticket Status</h3>
-          <p>Current workload split</p>
-        </div>
-        <canvas id="statusChart"></canvas>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h3>Team Leaderboard</h3>
-          <p>Top agents this month</p>
-        </div>
-        <div class="leaderboard">
-          <div><span>1. Sarah Ahmed</span><strong>96%</strong></div>
-          <div><span>2. Omar Hassan</span><strong>92%</strong></div>
-          <div><span>3. Mona Ali</span><strong>89%</strong></div>
-          <div><span>4. Karim Said</span><strong>84%</strong></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">CX</div>
+        <div>
+          <strong>CX Command</strong>
+          <span>Operations Intelligence</span>
         </div>
       </div>
 
-      <div class="panel large">
-        <div class="panel-header">
-          <h3>Quality Checklist</h3>
-          <p>Compliance and service behavior scoring</p>
+      <nav class="nav" aria-label="Primary navigation">
+        <button class="nav-item active" type="button" data-view="overview">
+          <span class="nav-icon">◫</span><span>Overview</span>
+        </button>
+        <button class="nav-item" type="button" data-view="channels">
+          <span class="nav-icon">◉</span><span>Channels</span>
+        </button>
+        <button class="nav-item" type="button" data-view="quality">
+          <span class="nav-icon">◇</span><span>Quality</span>
+        </button>
+        <button class="nav-item" type="button" data-view="workforce">
+          <span class="nav-icon">◎</span><span>Workforce</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="live-dot"></span>
+        <div>
+          <strong>Demo workspace</strong>
+          <p>Synthetic portfolio data</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">CUSTOMER EXPERIENCE OPERATIONS</p>
+          <h1>Performance command center</h1>
+          <p class="subtitle">A single view of service level, quality, demand, and team performance.</p>
         </div>
 
-        <div class="checklist">
-          <div>
-            <span>Greeting & verification</span>
-            <progress value="94" max="100"></progress>
+        <div class="topbar-actions">
+          <label class="control">
+            <span>Period</span>
+            <select id="periodFilter">
+              <option value="today">Today</option>
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+            </select>
+          </label>
+          <label class="control">
+            <span>Team</span>
+            <select id="teamFilter">
+              <option value="all" selected>All teams</option>
+              <option value="voice">Voice</option>
+              <option value="digital">Digital</option>
+              <option value="retention">Retention</option>
+            </select>
+          </label>
+          <button id="themeToggle" class="icon-button" type="button" aria-label="Toggle theme">◐</button>
+        </div>
+      </header>
+
+      <section class="status-strip" aria-label="Operational status">
+        <div><span class="status-dot good"></span><strong>Live operations</strong></div>
+        <span id="lastUpdated">Updated just now</span>
+        <span class="divider"></span>
+        <span>Target SLA: 80% in 20s</span>
+      </section>
+
+      <section class="kpi-grid" aria-label="Key performance indicators">
+        <article class="kpi-card">
+          <div class="kpi-head"><span>Answer rate</span><span class="badge positive">+1.8%</span></div>
+          <strong class="kpi-value" id="answerRate">95.4%</strong>
+          <div class="kpi-foot"><span>Target 95%</span><span class="target-met">On target</span></div>
+          <div class="spark" id="sparkAnswer"></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head"><span>Service level</span><span class="badge positive">+2.4%</span></div>
+          <strong class="kpi-value" id="serviceLevel">84.7%</strong>
+          <div class="kpi-foot"><span>80% answered ≤20s</span><span class="target-met">On target</span></div>
+          <div class="spark" id="sparkSla"></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head"><span>Average speed to answer</span><span class="badge positive">−3s</span></div>
+          <strong class="kpi-value" id="asa">17s</strong>
+          <div class="kpi-foot"><span>Target ≤20s</span><span class="target-met">Healthy</span></div>
+          <div class="spark" id="sparkAsa"></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head"><span>Average handle time</span><span class="badge neutral">+0.1m</span></div>
+          <strong class="kpi-value" id="aht">3.6m</strong>
+          <div class="kpi-foot"><span>Target 3.5m</span><span class="watch">Watch</span></div>
+          <div class="spark" id="sparkAht"></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head"><span>Quality score</span><span class="badge positive">+3.1%</span></div>
+          <strong class="kpi-value" id="qaScore">88.6%</strong>
+          <div class="kpi-foot"><span>Target ≥85%</span><span class="target-met">On target</span></div>
+          <div class="spark" id="sparkQa"></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head"><span>Customer satisfaction</span><span class="badge positive">+1.2%</span></div>
+          <strong class="kpi-value" id="csat">92.1%</strong>
+          <div class="kpi-foot"><span>1,284 responses</span><span class="target-met">Strong</span></div>
+          <div class="spark" id="sparkCsat"></div>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel span-2">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">DEMAND & SERVICE</p>
+              <h2>Contact volume vs. service level</h2>
+            </div>
+            <div class="legend-inline">
+              <span><i class="legend-swatch volume"></i>Contacts</span>
+              <span><i class="legend-swatch sla"></i>Service level</span>
+            </div>
           </div>
-          <div>
-            <span>Problem diagnosis</span>
-            <progress value="87" max="100"></progress>
+          <div class="chart-wrap tall"><canvas id="volumeChart"></canvas></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">CHANNEL MIX</p>
+              <h2>Demand distribution</h2>
+            </div>
           </div>
-          <div>
-            <span>Clear communication</span>
-            <progress value="91" max="100"></progress>
+          <div class="chart-wrap donut-wrap"><canvas id="channelChart"></canvas></div>
+          <div class="channel-summary" id="channelSummary"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">QUALITY</p>
+              <h2>QA dimensions</h2>
+            </div>
+            <span class="score-pill">88.6 overall</span>
           </div>
-          <div>
-            <span>Closing & follow-up</span>
-            <progress value="78" max="100"></progress>
+          <div class="qa-list" id="qaList"></div>
+        </article>
+
+        <article class="panel span-2">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">WORKFORCE</p>
+              <h2>Team performance</h2>
+            </div>
+            <button class="text-button" type="button" id="sortButton">Sort by QA ↓</button>
           </div>
-        </div>
-      </div>
-    </section>
-  </main>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Team</th>
+                  <th>Contacts</th>
+                  <th>Answer rate</th>
+                  <th>AHT</th>
+                  <th>QA</th>
+                  <th>CSAT</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="teamTable"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">ATTENTION</p>
+              <h2>Operational signals</h2>
+            </div>
+          </div>
+          <div class="signals" id="signals"></div>
+        </article>
+      </section>
+
+      <footer>
+        <p>Portfolio demonstration · All figures are synthetic and do not represent a real company or customer dataset.</p>
+        <p>Built with HTML, CSS, JavaScript & Chart.js.</p>
+      </footer>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
